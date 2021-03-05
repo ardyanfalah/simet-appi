@@ -1,25 +1,25 @@
 module.exports = app => {
     const penyelenggara = require("../controllers/penyelenggara.controller.js");
   
-    // Create a new admin
-    // app.post("/penyelenggara", penyelenggara.create);
+    // Create a new penyelenggara
+    app.post("/penyelenggara", penyelenggara.create);
   
     app.post("/penyelenggara/upload", penyelenggara.upload);
 
-    app.get("/penyelenggara/download", penyelenggara.download);
+    app.get("/penyelenggara/download/:imageId", penyelenggara.download);
 
-    // // Retrieve all admins
-    // app.get("/penyelenggara", admins.findAll);
+    // Retrieve all penyelenggara
+    app.get("/penyelenggara", penyelenggara.findAll);
   
-    // // Retrieve a single admin with adminId
-    // // app.get("/admins/:adminId", admins.findOne);
+    // // Retrieve a single penyelenggara with penyelenggaraId
+    // // app.get("/penyelenggara/:penyelenggaraId", penyelenggara.findOne);
   
-    // // Update a admin with adminId
-    // app.put("/penyelenggara/:adminId", admins.update);
+    // // Update a penyelenggara with penyelenggaraId
+    app.put("/penyelenggara/:penyelenggaraId", penyelenggara.update);
   
-    // // Delete a admin with adminId
-    // app.delete("/penyelenggara/:adminId", admins.delete);
+    // // Delete a penyelenggara with penyelenggaraId
+    app.delete("/penyelenggara/:penyelenggaraId", penyelenggara.delete);
   
-    // // Create a new admin
-    // app.delete("/admins", admins.deleteAll);
+    // // Create a new penyelenggara
+    // app.delete("/penyelenggara", penyelenggara.deleteAll);
   };

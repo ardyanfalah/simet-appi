@@ -49,54 +49,56 @@ exports.upload = (req, res) => {
 };
 
 exports.download = (req,res)=>{
-    const file = `${process.cwd()}/public/uploads/1614940172364.jpg`;
+
+    const file = `${process.cwd()}/public/uploads/`+req.params.imageId;
+    console.log(file)
     res.download(file); // Set disposition and send it.
 }
 // Create and Save a new Customer
 exports.create = (req, res) => {
-  
-    if (!req.files)
-        res.status(400).send({
-            success: false,
-            data: null,
-            message:
-            err.message || "No files were uploaded."
-        });
-    var file = req.files.uploaded_image;
-    console.log()
-    var img_name=Date.now() + path.extname(file.name);
-    if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
-        file.mv('public/uploads/'+img_name)
-    }
+  res.send({success:true,data: null, message: "Penyelenggara berhasil dibuat"})
+  // var data = JSON.parse(req.body.data);
+  // console.log(req.body.data)
+  //   if (!req.files)
+  //       res.status(400).send({
+  //           success: false,
+  //           data: null,
+  //           message:
+  //           err.message || "No files were uploaded."
+  //       });
+  //   var file = req.files.image;
+  //   console.log(file)
+  //   var img_name=Date.now() + path.extname(file.name);
+  //   if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
+  //       file.mv('public/uploads/'+img_name)
+  //   }
 
-    // Validate request
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-  }
+  //   // Validate request
+  // if (!req.body) {
+  //   res.status(400).send({
+  //     message: "Content can not be empty!"
+  //   });
+  // }
 
-  // Create a Customer
-  const penyelenggara = new Penyelenggara({
-    email_penyelenggara : req.body.email_penyelenggara,
-    nama_penyelenggara : req.body.nama_penyelenggara,
-    password_penyelenggara : req.body.password_penyelenggara,
-    status_penyelenggara : req.body.status_penyelenggara,
-    hp_penyelenggara : req.body.hp_penyelenggara,
-    gambar_penyelenggara : req.body.gambar_penyelenggara,
-    status : req.body.status
-  });
+  // // Create a Customer
+  // const penyelenggara = new Penyelenggara({
+  //   email_penyelenggara : data.email_penyelenggara,
+  //   nama_penyelenggara : data.nama_penyelenggara,
+  //   hp_penyelenggara : data.hp_penyelenggara,
+  //   gambar_penyelenggara : img_name,
+  //   status : data.status
+  // });
 
-  Penyelenggara.create(penyelenggara, (err, data) => {
-    if (err)
-      res.status(500).send({
-        success: false,
-        data: null,
-        message:
-          err.message || "Some error occurred while creating the Penyelenggara."
-      });
-    else res.send({success:true,data: null, message: "Penyelenggara berhasil dibuat"});
-  });
+  // Penyelenggara.create(penyelenggara, (err, data) => {
+  //   if (err)
+  //     res.status(500).send({
+  //       success: false,
+  //       data: null,
+  //       message:
+  //         err.message || "Some error occurred while creating the Penyelenggara."
+  //     });
+  //   else res.send({success:true,data: null, message: "Penyelenggara berhasil dibuat"});
+  // });
 
 };
 
