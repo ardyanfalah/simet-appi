@@ -17,7 +17,6 @@ Penyelenggara.create = (newpenyelenggara, result) => {
       return;
     }
 
-    console.log("created customer: ", { id: res.id_penyelenggara, ...newpenyelenggara });
     result(null, { id: res.id_penyelenggara, ...newpenyelenggara });
   });
 };
@@ -31,7 +30,6 @@ Penyelenggara.findById = (penyelenggaraId, result) => {
     }
 
     if (res.length) {
-      console.log("found penyelenggara: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -49,15 +47,14 @@ Penyelenggara.getAll = result => {
       return;
     }
 
-    console.log("customers: ", res);
     result(null, res);
   });
 };
 
 Penyelenggara.updateById = (id, penyelenggara, result) => {
   sql.query(
-    "UPDATE tbl_penyelenggara SET email_penyelenggara = ?, nama_penyelenggara = ?, password_penyelenggara = ?,role_penyelenggara=? WHERE id_penyelenggara = ?",
-    [penyelenggara.email_penyelenggara, penyelenggara.nama_penyelenggara, penyelenggara.password_penyelenggara,penyelenggara.role_penyelenggara, id],
+    "UPDATE tbl_penyelenggara SET email_penyelenggara = ?, nama_penyelenggara = ?, hp_penyelenggara = ?,status=?, gambar_penyelenggara=? WHERE id_penyelenggara = ?",
+    [penyelenggara.email_penyelenggara, penyelenggara.nama_penyelenggara, penyelenggara.hp_penyelenggara,penyelenggara.status, penyelenggara.gambar_penyelenggara, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -71,7 +68,6 @@ Penyelenggara.updateById = (id, penyelenggara, result) => {
         return;
       }
 
-      console.log("updated penyelenggara: ", { id: id, ...penyelenggara });
       result(null, { id: id, ...penyelenggara });
     }
   );
@@ -91,7 +87,6 @@ Penyelenggara.remove = (id, result) => {
       return;
     }
 
-    console.log("deleted penyelenggara with id: ", id);
     result(null, res);
   });
 };
@@ -104,7 +99,6 @@ Penyelenggara.removeAll = result => {
       return;
     }
 
-    console.log(`deleted ${res.affectedRows} penyelenggara`);
     result(null, res);
   });
 };

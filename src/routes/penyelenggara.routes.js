@@ -6,7 +6,7 @@ module.exports = app => {
   
     app.post("/penyelenggara/upload", penyelenggara.upload);
 
-    app.get("/penyelenggara/download/:imageId", penyelenggara.download);
+    app.get("/download/:imageId", penyelenggara.download);
 
     // Retrieve all penyelenggara
     app.get("/penyelenggara", penyelenggara.findAll);
@@ -15,7 +15,7 @@ module.exports = app => {
     // // app.get("/penyelenggara/:penyelenggaraId", penyelenggara.findOne);
   
     // // Update a penyelenggara with penyelenggaraId
-    app.put("/penyelenggara/:penyelenggaraId", penyelenggara.update);
+    app.post("/penyelenggara/update", penyelenggara.update);
   
     // // Delete a penyelenggara with penyelenggaraId
     app.delete("/penyelenggara/:penyelenggaraId", penyelenggara.delete);

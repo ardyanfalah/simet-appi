@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const fileUpload = require('express-fileupload')
-
+const multer = require('multer');
 const app = express();
 const path = require("path");
 
@@ -10,9 +10,10 @@ const path = require("path");
 app.use(cors());
 app.options('*', cors());
 // parse requests of content-type: application/json
-app.use(bodyParser.json());
+
 app.use(fileUpload());
 // parse requests of content-type: application/x-www-form-urlencoded
+app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 

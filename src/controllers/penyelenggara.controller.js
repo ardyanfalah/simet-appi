@@ -56,49 +56,48 @@ exports.download = (req,res)=>{
 }
 // Create and Save a new Customer
 exports.create = (req, res) => {
-  res.send({success:true,data: null, message: "Penyelenggara berhasil dibuat"})
-  // var data = JSON.parse(req.body.data);
-  // console.log(req.body.data)
-  //   if (!req.files)
-  //       res.status(400).send({
-  //           success: false,
-  //           data: null,
-  //           message:
-  //           err.message || "No files were uploaded."
-  //       });
-  //   var file = req.files.image;
-  //   console.log(file)
-  //   var img_name=Date.now() + path.extname(file.name);
-  //   if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
-  //       file.mv('public/uploads/'+img_name)
-  //   }
+  
+  var data = JSON.parse(req.body.data);
+    if (!req.files)
+        res.status(400).send({
+            success: false,
+            data: null,
+            message:
+            err.message || "No files were uploaded."
+        });
+    var file = req.files.image;
+    console.log(file)
+    var img_name=Date.now() + path.extname(file.name);
+    if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
+        file.mv('public/uploads/'+img_name)
+    }
 
-  //   // Validate request
-  // if (!req.body) {
-  //   res.status(400).send({
-  //     message: "Content can not be empty!"
-  //   });
-  // }
+    // Validate request
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
 
-  // // Create a Customer
-  // const penyelenggara = new Penyelenggara({
-  //   email_penyelenggara : data.email_penyelenggara,
-  //   nama_penyelenggara : data.nama_penyelenggara,
-  //   hp_penyelenggara : data.hp_penyelenggara,
-  //   gambar_penyelenggara : img_name,
-  //   status : data.status
-  // });
+  // Create a Customer
+  const penyelenggara = new Penyelenggara({
+    email_penyelenggara : data.email_penyelenggara,
+    nama_penyelenggara : data.nama_penyelenggara,
+    hp_penyelenggara : data.hp_penyelenggara,
+    gambar_penyelenggara : img_name,
+    status : 'Active'
+  });
 
-  // Penyelenggara.create(penyelenggara, (err, data) => {
-  //   if (err)
-  //     res.status(500).send({
-  //       success: false,
-  //       data: null,
-  //       message:
-  //         err.message || "Some error occurred while creating the Penyelenggara."
-  //     });
-  //   else res.send({success:true,data: null, message: "Penyelenggara berhasil dibuat"});
-  // });
+  Penyelenggara.create(penyelenggara, (err, data) => {
+    if (err)
+      res.status(500).send({
+        success: false,
+        data: null,
+        message:
+          err.message || "Some error occurred while creating the Penyelenggara."
+      });
+    else res.send({success:true,data: null, message: "Penyelenggara berhasil dibuat"});
+  });
 
 };
 
@@ -124,29 +123,51 @@ exports.findOne = (req, res) => {
 // Update a Customer identified by the customerId in the request
 exports.update = (req, res) => {
   // Validate Request
+  var data = JSON.parse(req.body.data);
+    if (req.files != null && req.files != undefined){
+      var file = req.files.image;
+      console.log(file)
+      var img_name=Date.now() + path.extname(file.name);
+      if(file.mimetype == "image/jpeg" ||file.mimetype == "image/png"||file.mimetype == "image/gif" ){
+          file.mv('public/uploads/'+img_name)
+      }
+    } else {
+      var img_name=data.gambar_penyelenggara;
+    }
+      
 
+    // Validate request
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
   }
 
-  Admin.updateById(
-    req.params.adminId,
-    new Penyelenggara(req.body),
+  // Create a Customer
+  const penyelenggara = new Penyelenggara({
+    email_penyelenggara : data.email_penyelenggara,
+    nama_penyelenggara : data.nama_penyelenggara,
+    hp_penyelenggara : data.hp_penyelenggara,
+    gambar_penyelenggara : img_name,
+    status : data.status
+  });
+
+  Penyelenggara.updateById(
+    data.id_penyelenggara,
+    penyelenggara,
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
             success: false,
             data: null,
-            message: `Not found penyelenggara with id ${req.params.penyelenggaraId}.`
+            message: `Not found penyelenggara with id ${data.id_penyelenggara}.`
           });
         } else {
           res.status(500).send({
             success: false,
             data: null,
-            message: "Error updating penyelenggara with id " + req.params.penyelenggaraId
+            message: "Error updating penyelenggara with id " +data.id_penyelenggara
           });
         }
       } else res.send({success:true,data: null, message: "Penyelenggara berhasil di update"});
