@@ -7,7 +7,7 @@ const app = express();
 const path = require("path");
 
 
-app.use(cors());
+app.use(cors({credentials: true, origin: true, exposedHeaders: '*'}));
 app.options('*', cors());
 // parse requests of content-type: application/json
 
@@ -16,10 +16,14 @@ app.use(fileUpload());
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var corsOptions = {
+  origin: 'http://privateaf.masuk.web.id',
+  optionsSuccessStatus: 200 
+}
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to Simet-APPI." });
 });
 
 function validateIndex(req, res, next) {
