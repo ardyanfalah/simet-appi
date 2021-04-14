@@ -24,13 +24,11 @@ exports.upload = (req, res) => {
   }
 
   // Create a Customer
-  const penyelinstrukturenggara = new Instruktur({
-    email_penyelenggara : req.body.email_penyelenggara,
-    nama_penyelenggara : req.body.nama_penyelenggara,
-    password_penyelenggara : req.body.password_penyelenggara,
-    status_penyelenggara : req.body.status_penyelenggara,
-    hp_penyelenggara : req.body.hp_penyelenggara,
-    gambar_penyelenggara : req.body.gambar_penyelenggara,
+  const instruktur = new Instruktur({
+    email_instruktur : req.body.email_instruktur,
+    nama_instruktur : req.body.nama_instruktur,
+    hp_instruktur : req.body.hp_instruktur,
+    gambar_instruktur : req.body.gambar_instruktur,
     status : req.body.status
   });
 
@@ -80,10 +78,10 @@ exports.create = (req, res) => {
 
   // Create a Customer
   const instruktur = new Instruktur({
-    email_penyelenggara : data.email_penyelenggara,
-    nama_penyelenggara : data.nama_penyelenggara,
-    hp_penyelenggara : data.hp_penyelenggara,
-    gambar_penyelenggara : img_name,
+    email_instruktur : data.email_instruktur,
+    nama_instruktur : data.nama_instruktur,
+    hp_instruktur : data.hp_instruktur,
+    gambar_instruktur : img_name,
     status : 'Active'
   });
 
@@ -131,7 +129,7 @@ exports.update = (req, res) => {
           file.mv('public/uploads/'+img_name)
       }
     } else {
-      var img_name=data.gambar_penyelenggara;
+      var img_name=data.gambar_instruktur;
     }
       
 
@@ -143,16 +141,16 @@ exports.update = (req, res) => {
   }
 
   // Create a Customer
-  const instruktur = new Penyelenggara({
-    email_penyelenggara : data.email_penyelenggara,
-    nama_penyelenggara : data.nama_penyelenggara,
-    hp_penyelenggara : data.hp_penyelenggara,
-    gambar_penyelenggara : img_name,
+  const instruktur = new Instruktur({
+    email_instruktur : data.email_instruktur,
+    nama_instruktur : data.nama_instruktur,
+    hp_instruktur : data.hp_instruktur,
+    gambar_instruktur : img_name,
     status : data.status
   });
 
   Instruktur.updateById(
-    data.id_penyelenggara,
+    data.id_instruktur,
     Instruktur,
     (err, data) => {
       if (err) {
@@ -160,13 +158,13 @@ exports.update = (req, res) => {
           res.status(404).send({
             success: false,
             data: null,
-            message: `Not found instruktur with id ${data.id_penyelenggara}.`
+            message: `Not found instruktur with id ${data.id_instruktur}.`
           });
         } else {
           res.status(500).send({
             success: false,
             data: null,
-            message: "Error updating instruktur with id " +data.id_penyelenggara
+            message: "Error updating instruktur with id " +data.id_instruktur
           });
         }
       } else res.send({success:true,data: null, message: "Instruktur berhasil di update"});
@@ -176,22 +174,22 @@ exports.update = (req, res) => {
 
 // Delete a Customer with the specified customerId in the request
 exports.delete = (req, res) => {
-    Instruktur.remove(req.params.penyelenggaraId, (err, data) => {
+    Instruktur.remove(req.params.instrukturId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
           success: false,
           data: null,
-          message: `Not found Instruktur with id ${req.params.penyelenggaraId}.`
+          message: `Not found Instruktur with id ${req.params.instrukturId}.`
         });
       } else {
         res.status(500).send({
           success: false,
           data: null,
-          message: "Could not delete Instruktur with id " + req.params.penyelenggaraId
+          message: "Could not delete Instruktur with id " + req.params.instrukturId
         });
       }
-    } else res.send({success:true,data: null, message: "Admin berhasil di delete"});
+    } else res.send({success:true,data: null, message: "Data instruktur berhasil di delete"});
   });
 };
 
